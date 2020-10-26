@@ -27,7 +27,7 @@ def authenticate():
     if msg['username'] == msg['password'] :
         r_msg = {'msg':'Welcome'}
         json_msg = json.dumps(r_msg)
-        return Response(json_msg, status=200);
+        return Response(json_msg, status=200)
     r_msg = {'msg':'Failed'}
     json_msg = json.dumps(r_msg)
     return Response(json_msg, status=401)
