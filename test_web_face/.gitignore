@@ -1,4 +1,2 @@
 .idea
 *.db
-/web/__pycache__/
-*web/.pyc
