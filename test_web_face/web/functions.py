@@ -4,6 +4,7 @@ import cv2
 import numpy as np
 
 def runTest():
+    flag = False
     #To capture a video, you need to create a VideoCapture object (#0-the default one)
     video_cap = cv2.VideoCapture(0)
 
@@ -92,8 +93,10 @@ def runTest():
 
         # Hit 'q' on the keyboard to quit!
         if cv2.waitKey(1) & 0xFF == ord('q'):
+            flag = True
             break
 
     # Release handle to the webcam
     video_cap.release()
     cv2.destroyAllWindows()
+    return flag

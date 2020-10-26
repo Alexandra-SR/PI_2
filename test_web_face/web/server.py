@@ -34,12 +34,16 @@ def authenticate():
 
 @app.route('/test', methods=['POST'])
 def test():
-    functions.runTest()
-    r_msg = {'msg':'Finished'}
+    flag = functions.runTest()
+    if flag:
+        r_msg = {'msg':'Success'}
+        json_msg = json.dumps(r_msg)
+        return Response(json_msg, status=200)
+    r_msg = {'msg':'Failed attempt'}
     json_msg = json.dumps(r_msg)
     return Response(json_msg, status=401)
 
-
+   
 if __name__ == '__main__':
     app.secret_key = ".."
     app.run(port=8080, threaded=True, host=('127.0.0.1'))
