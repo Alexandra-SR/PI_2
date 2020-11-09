@@ -149,10 +149,14 @@ def login(username):
         for file in os.listdir(known_dir):
             #print(len(os.listdir(known_dir)))
             img = face_recognition.load_image_file(known_dir + '/' + file)
-            img_enc = face_recognition.face_encodings(img)[0]
-            known_face_encodings.append(img_enc)
-            known_face_names.append(file.split('.')[0])
-            print('hecho')
+            img_enc = face_recognition.face_encodings(img)
+            if len(img_enc) > 0:
+                img_enc = img_enc[0]
+                known_face_encodings.append(img_enc)
+                known_face_names.append(file.split('.')[0])
+                print('hecho')
+            else:
+                print("vacio")
         # Initialize some variables
         face_locations = []
         face_encodings = []
@@ -220,6 +224,8 @@ def login(username):
                     print('reconocido')
                     time.sleep(2)
                     probar=best_match
+                    video_cap.release()
+                    cv2.destroyAllWindows()
                     return (True, True)
                     #break  #cerrar ciclo pero tambien deberia haber una mayor comprobacion del reconocimiento
 
@@ -259,40 +265,48 @@ def signup(username):
     try:
         os.makedirs("known2/" + username)   
         print("Directory " , username ,  " Created ")
-        #To capture a video,  need to create a VideoCapture object (#0-the default one)
+        #To capture a video, you need to create a VideoCapture object (#0-the default one)
         video_cap = cv2.VideoCapture(0)
 
         face_classif = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
         s = 0
+        q = 0
 
-        while True and s<5:
+        while True and s < 20:
             ret,frame = video_cap.read()
 
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
             faces = face_classif.detectMultiScale(gray, 1.3, 5)
-
-
-
+            
+            q=s
+                        
             #Put rectangle in face
             for(x, y, w, h) in faces:
-                #cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
-                cv2.putText(frame,"ROSTRO DETECTADO! Presione s para guardar rostro",(10,20),2,0.5,(128,0,255),1,cv2.LINE_AA)
-                if cv2.waitKey(1) & 0xFF == ord('s'):
-                        rostro = frame
-                        cv2.imwrite('known2/'+username+'/'+username+'_{}.jpg'.format(len(glob.glob('known2/'+username+'/'+'*.jpg'))),rostro) #falta quitarle el texto en la foto
-                        print("Rostro guardado")
-                        s=s+1
-                        print(s)
-
+                cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
+                rostro = frame
+                s=s+1
+                if s>10:
+                    cv2.imwrite('known2/'+username+'/'+username+'_{}.jpg'.format(len(glob.glob('known2/'+username+'/'+'*.jpg'))),rostro) #falta quitarle el texto en la foto
+                    print("Rostro guardado")
+                print(s)
+            
+            if q==s:
+                s=0
+                        
             # Display the resulting image
             cv2.imshow('PI2 - Face detection', frame)
 
             # Hit 'q' on the keyboard to quit!
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
-
+                
+            if len(glob.glob('known2/'+username+'/'+'*.jpg'))>10:
+                for f in glob.glob('known2/'+username+'/'+'*.jpg'):
+                    os.remove(f)
+                s=0
+        
         # Release handle to the webcam
         video_cap.release()
         cv2.destroyAllWindows()
@@ -300,6 +314,5 @@ def signup(username):
         return True
 
     except FileExistsError:
-        print("Directory " , username ,  " already exists") 
+        print("Directory " , username ,  " already exists")
         return False
- 

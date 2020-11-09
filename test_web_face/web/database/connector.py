@@ -9,7 +9,8 @@ class Manager:
     session = None
 
     def createEngine(self):
-        engine = create_engine('sqlite:///chat.db?check_same_thread=False', echo=False)
+        engine = create_engine('sqlite:///docs.db?check_same_thread=False', echo=False)
+        #engine = create_engine('postgresql://chat:chat123@107.180.91.147:5432/chatdb')
         self.Base.metadata.create_all(engine)
         return engine
 

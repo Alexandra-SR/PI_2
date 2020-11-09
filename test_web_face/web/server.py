@@ -20,18 +20,12 @@ def static_content(content):
 def index():
     return render_template('index.html')
 
-"""@app.route('/authenticate', methods=['POST'])
-def authenticate():
-    msg = json.loads(request.data)
-    #dummy validation
-    if msg['username'] == msg['password'] :
-        r_msg = {'msg':'Welcome'}
-        json_msg = json.dumps(r_msg)
-        return Response(json_msg, status=200)
-    r_msg = {'msg':'Failed'}
-    json_msg = json.dumps(r_msg)
-    return Response(json_msg, status=401)
-"""
+@app.route('/current', methods = ['GET'])
+def current():
+    username_json = session['username']
+    print(session)
+    return Response(username_json, status=200, mimetype="application/json")
+
 @app.route('/login', methods=['POST'])
 def login():
     msg = json.loads(request.data)
@@ -49,28 +43,32 @@ def login():
     json_msg = json.dumps(r_msg)
     return Response(json_msg, status=401)
 
+@app.route('/signup', methods = ['POST'])
+def signup():
+    msg = json.loads(request.data)
+    db_session = db.getSession(engine)
+    respuesta = db_session.query(entities.User).filter(entities.User.username == msg['username'])
+    users = respuesta[:]
+    if len(users) == 0:
+        flag = functions.signup(msg['username'])
+        if flag:
+            user = entities.User(
+                username=msg['username'],
+                name=msg['name'],
+                lastname=msg['lastname']
+            )            
 
-
-@app.route('/current', methods = ['GET'])
-def current():
-    username_json = session['username']
-    print(session)
-    return Response(username_json, status=200, mimetype="application/json")
-
-
-
-
-
-@app.route('/testSignUp', methods=['POST'])
-def testSignUp():
-    flag = functions.testPictureSignUp()
-    if flag:
-        r_msg = {'msg':'Success'}
-        json_msg = json.dumps(r_msg)
-        return Response(json_msg, status=200)
-    r_msg = {'msg':'Failed attempt'}
-    json_msg = json.dumps(r_msg)
-    return Response(json_msg, status=401)
+            db_session.add(user)
+            db_session.commit()
+            message = {'msg': 'Account created!'}
+            json_msg = json.dumps(message)
+            return Response(json_msg, status = 201, mimetype = "application/json")
+        message = {'msg': 'Fail!'}
+        json_msg = json.dumps(message)
+        return Response(json_msg, status = 401, mimetype = "application/json")
+    message = {'msg': 'Fail!'}
+    json_msg = json.dumps(message)
+    return Response(json_msg, status = 401, mimetype = "application/json")
 
 @app.route('/logout', methods=['GET'])
 def logout():

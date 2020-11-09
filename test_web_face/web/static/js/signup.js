@@ -1,22 +1,39 @@
-function runTestTakePicture(){
-    console.log("Running Test");
-    //var credentials = {'username':username, 'password':password};
-    $.ajax({
-        url:'/testSignUp',
-        type: 'post',
-        dataType: 'json',
-        contentType: 'application/json',
-        statusCode:{
-            401: function(data){
-              console.log("Failed identification!");
-            }
-          },
-        success: function(data){
-            console.log("Finished test!");
-            alert(data['msg']);
+function signup(){
+  var name = $('#name').val(); //getting name by ID w/ jquery
+  var lastname = $('#lastname').val(); //getting lastname by ID w/ jquery
+  var username = $('#username').val(); //getting username by ID w/ jquery
+  //var password = $('#password').val(); //getting password by ID w/ jquery
+  //var studentID = $('#studentID').val(); //getting studentID by ID w/ jquery
 
-        },
-        //data: JSON.stringify(credentials)
-    });
+  //console.log("DATA>",username, password);
+  var credentials = {'name': name, 'lastname': lastname, 'username': username};
+  $.ajax({
+    url: '/signup',
+    type: 'post',
+    dataType: 'json',
+    contentType: 'application/json',
+    statusCode:{
+      401: function(data){
+        console.log("Username already exists");
+        //alert("There's already an account with the same username!\nTry a new one");
+        //window.location = '/static/html/signup.html';
+        $("#after").empty();
+        var div = '<div class="alert alert-danger" role="alert"><a class="alert-link">Username already exists!</a> Try with new credentials.</div>';
+        $("#after").append(div);
+
+
+    }
+  },
+    success: function(data){
+      $("#after").empty();
+      console.log("Account created!");
+      //alert("You have successfully created an account!");
+      //window.location = '/static/html/login.html';
+      var div = '<div class="alert alert-success" role="alert">Great! <a class="alert-link">Your account has been created.</a></div>';
+      $("#after").append(div);
+      window.setTimeout(function(){window.location = '/static/html/login.html';}, 3000);
+
+    },
+    data: JSON.stringify(credentials)
+  });
 }
-

@@ -7,7 +7,7 @@ class User(connector.Manager.Base):
     username = Column(String(20), Sequence('user_id_seq'), primary_key=True)
     name = Column(String(50))
     lastname = Column(String(50))
-    password = Column(String(12))
+    #password = Column(String(12))
 
 class Docs(connector.Manager.Base):
     __tablename__ = 'docs'
