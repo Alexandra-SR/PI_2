@@ -14,10 +14,38 @@
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
         <link rel="stylesheet" href="../css/bootstrap.css">
         <script src="/static/js/libs/jquery-3.3.1.js"></script>
+        <link rel="stylesheet" href="/static/css/docs.css">
+
     <script src="/static/js/libs/bootstrap.js"></script>
     <script src="/static/js/docs.js"></script>
+    <script src="/static/js/logout.js"></script>
 
 </head>
 <body onload = get_current()>
-    
+  <div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="banner-content text-center">
+              <br>
+                <h1 class="title">My Docs</h1>
+                <div id="title">
+
+                </div>
+              
+                <button type="button" class="btn btn-secondary" onclick="goMain()">Go Back</button>
+                <br>
+                <br>
+                <table class="table table-dark" id = "res_table">
+                    
+                </table>
+                <div id="status">
+                    </div>
+
+                <button type="button" class="btn btn-dark" onclick="logout()">Log Out</button>
+
+            </div>
+
+        </div>
+    </div>
+</div>
 </body>

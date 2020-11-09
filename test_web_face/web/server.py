@@ -54,6 +54,7 @@ def login():
 @app.route('/current', methods = ['GET'])
 def current():
     username_json = session['username']
+    print(session)
     return Response(username_json, status=200, mimetype="application/json")
 
 
@@ -71,7 +72,14 @@ def testSignUp():
     json_msg = json.dumps(r_msg)
     return Response(json_msg, status=401)
 
-   
+@app.route('/logout', methods=['GET'])
+def logout():
+    if 'username' in session:
+        session.pop('username')
+    response = {'msg': 'logged out'}
+    json_response = json.dumps(response)
+    return Response(json_response, mimetype='application/json')
+
 if __name__ == '__main__':
     app.secret_key = ".."
     app.run(port=8080, threaded=True, host=('127.0.0.1'))

@@ -29,15 +29,24 @@ function login(){
         statusCode:{
             401: function(data){
               console.log("User was not found!");
+              $("#after").empty();
+                var div = '<div class="alert alert-danger" role="alert"><a class="alert-link">Username was not found.</a> Sign up first.</div>';
+                $("#after").append(div);
             },
             301: function(data){
                 console.log("Failed to match");
+                $("#after").empty();
+                var div = '<div class="alert alert-danger" role="alert"><a class="alert-link">Failed to math!</a> Try again.</div>';
+                $("#after").append(div);
             } 
           },
         success: function(data){
             console.log("User  test!");
-            alert(data['msg']);
+            //alert(data['msg']);
+            $("#after").empty();
             window.setTimeout(function(){window.location = '/static/html/docs.html';}, 2000);
+            var div = '<div class="alert alert-success" role="alert">Great! <a class="alert-link">You\'re logged in.</a></div>';
+            $("#after").append(div);
 
         },
         data: JSON.stringify(credentials)
