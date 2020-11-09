@@ -20,7 +20,7 @@ def static_content(content):
 def index():
     return render_template('index.html')
 
-@app.route('/authenticate', methods=['POST'])
+"""@app.route('/authenticate', methods=['POST'])
 def authenticate():
     msg = json.loads(request.data)
     #dummy validation
@@ -31,10 +31,38 @@ def authenticate():
     r_msg = {'msg':'Failed'}
     json_msg = json.dumps(r_msg)
     return Response(json_msg, status=401)
+"""
+@app.route('/login', methods=['POST'])
+def login():
+    msg = json.loads(request.data)
+    ans = functions.login(msg['username'])
+    if ans[0] and ans[1]:
+        session['username'] = json.dumps(msg['username'], cls=connector.AlchemyEncoder)
+        r_msg = {'msg':'Match with username!'}
+        json_msg = json.dumps(r_msg)
+        return Response(json_msg, status=200)
+    elif ans[0] and not ans[1]:
+        r_msg = {'msg':'Failed to match!'}
+        json_msg = json.dumps(r_msg)
+        return Response(json_msg, status=301)
+    r_msg = {'msg':'User was not found!'}
+    json_msg = json.dumps(r_msg)
+    return Response(json_msg, status=401)
 
-@app.route('/test', methods=['POST'])
-def test():
-    flag = functions.runTest()
+
+
+@app.route('/current', methods = ['GET'])
+def current():
+    username_json = session['username']
+    return Response(username_json, status=200, mimetype="application/json")
+
+
+
+
+
+@app.route('/testSignUp', methods=['POST'])
+def testSignUp():
+    flag = functions.testPictureSignUp()
     if flag:
         r_msg = {'msg':'Success'}
         json_msg = json.dumps(r_msg)

@@ -18,25 +18,29 @@
     });
 }*/
 
-function runTest(){
-    console.log("Running Test");
-    //var credentials = {'username':username, 'password':password};
+function login(){
+    var username = $('#username').val();
+    var credentials = {'username':username};
     $.ajax({
-        url:'/test',
+        url:'/login',
         type: 'post',
         dataType: 'json',
         contentType: 'application/json',
         statusCode:{
             401: function(data){
-              console.log("Failed identification!");
-            }
+              console.log("User was not found!");
+            },
+            301: function(data){
+                console.log("Failed to match");
+            } 
           },
         success: function(data){
-            console.log("Finished test!");
+            console.log("User  test!");
             alert(data['msg']);
+            window.setTimeout(function(){window.location = '/static/html/docs.html';}, 2000);
 
         },
-        //data: JSON.stringify(credentials)
+        data: JSON.stringify(credentials)
     });
 }
 
