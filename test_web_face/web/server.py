@@ -11,6 +11,7 @@ engine = db.createEngine()
 app = Flask(__name__)
 
 
+#Render template
 @app.route('/static/<content>')
 def static_content(content):
     return render_template(content)
