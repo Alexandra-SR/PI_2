@@ -23,18 +23,29 @@ const signUpButton = document.getElementById('signUp');
 const signInButton = document.getElementById('signIn');
 const container = document.getElementById('container');
 
-if(signUpButton){
+
+signUpButton.addEventListener('click', () => {
+	container.classList.add("right-panel-active");
+});
+
+signInButton.addEventListener('click', () => {
+	container.classList.remove("right-panel-active");
+});
+
+
+/*if(signUpButton){
   signUpButton.addEventListener('click', () =>{
-     container.classList.add('right-panel-active');
+     container.classList.remove('right-panel-active');
 });}
 
 if(signInButton){
   signInButton.addEventListener('click', () =>{
-     container.classList.remove('right-panel-active');
+     container.classList.add('right-panel-active');
 });}
+*/
 
-document.getElementById("PostUserButton").disabled = true;
-document.getElementById("LoginButton").disabled = true;
+document.getElementById("PostUserButton").disabled = false;
+document.getElementById("LoginButton").disabled = false;
 
 
 $("#usernameCreate, #nameCreate, #lastnameCreate").on(function(){
@@ -84,7 +95,7 @@ function button_press_Login(){
   );
 
   $.ajax({
-    url: '/authenticate',
+    url: '/login',
     type: 'POST',
     contentType: 'application/json',
     data: complete_login,
@@ -92,7 +103,7 @@ function button_press_Login(){
     success: function(data){
         console.log("User  test!");
         $("#after").empty();
-        window.setTimeout(function(){window.location = '/static/html/docs.html';}, 2000);
+        window.setTimeout(function(){window.location = '/static/html/options.html';}, 2000);
         var div = '<div class="alert alert-success" role="alert">Great! <a class="alert-link">You\'re logged in.</a></div>';
         $("#after").append(div);
         },
