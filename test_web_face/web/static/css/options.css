@@ -47,7 +47,7 @@
   }
   
   .split.left .button:hover {
-    background-color: var(--left-button-hover-color);
+    background-color: var( --left-button-hover-color );
     border-color: var(--left-button-hover-color);
   }
   
@@ -81,7 +81,7 @@
     content: "";
     width: 100%;
     height: 100%;
-    background: var(--left-bg-color);
+    background: var( --left-bg-color );
   }
   
   .split.right {
