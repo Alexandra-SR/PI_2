@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <link
+      href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      rel="stylesheet"
+      id="bootstrap-css"
+    />
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <meta charset="UTF-8" />
+    <title>File Upload</title>
+    <style type="text/css">
+      #dropZone {
+        border: 3px dashed #0088cc;
+        padding: 50px;
+        width: 500px;
+        margin-top: 20px;
+      }
+      #files {
+        border: 1px dotted #0088cc;
+        padding: 20px;
+        width: 200px;
+      }
+      #error {
+        color: red;
+      }
+    </style>
+    <script src="/static/js/upload_docs.js"></script>
+  </head>
+
+  <body>
+    <center>
+      <form
+        id="upload-file"
+        role="form"
+        action="sendQuestions"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <div class="modal-body">
+          <label for="file"><b>Upload packet here</b></label>
+          <input type="file" name="file" />
+          <p class="help-block">
+            Upload a .pdf or .docx file you want to read.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            Close
+          </button>
+          <button
+            id="upload-file-btn"
+            onclick="upload()"
+            type="button"
+            class="btn btn-primary"
+            data-dismiss="modal"
+            value="Upload"
+          >
+            Upload
+          </button>
+        </div>
+      </form>
+    </center>
+  </body>
+</html>
