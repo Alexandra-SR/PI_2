@@ -8,6 +8,7 @@
 
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
@@ -30,7 +31,13 @@
           <p class="lead">Sube los archivos que quieras compartir</p>
         </div>
       </div>
-    
+      <form
+        id="upload-file"
+        role="form"
+        action="sendQuestions"
+        method="post"
+        enctype="multipart/form-data"
+      >   
       
       <div class="row">
         <div class="col-lg-5 mx-auto">
@@ -63,9 +70,27 @@
                <!-- <input id="myFile" type="file" > -->
                            <!-- </label>  -->
 
-            <input type="file" id="myFile" multiple size="50" onchange="myFunction()">
+            <input type="file" name="file" multiple size="50" onchange="myFunction()">
 				
             <p id="demo"></p>
+            
+            <center>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">
+                Close
+              </button>
+              <button
+                id="upload-file-btn"
+                onclick="upload()"
+                type="button"
+                class="btn btn-primary"
+                data-dismiss="modal"
+                value="Upload"
+              >
+                Upload
+              </button>
+            </div>
+          </center>
 
             <!-- End -->
   
