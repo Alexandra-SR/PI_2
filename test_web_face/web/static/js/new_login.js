@@ -96,7 +96,7 @@ function button_press_Login(){
 
   $.ajax({
     url: '/login',
-    type: 'POST',
+    type: 'post',
     contentType: 'application/json',
     data: complete_login,
     dataType:'json',
