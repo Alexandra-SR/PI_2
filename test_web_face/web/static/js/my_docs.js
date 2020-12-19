@@ -12,10 +12,12 @@ function get_received() {
       if (size_a > 0) {
         let i = 0;
         $.each(data, function () {
-        //   let card = `<tr><td>${data[i]["room"]}</td><td>${data[i]["res_date"]}</td><td>${data[i]["time"]}</td><td><button class="btn btn-danger" onclick="cancelRes(${data[i]["res_id"]})">Cancel Reservation</button></td></tr>`;
-        //   $("#res_table").append(card);
-            console.log(data[i]);
-            i += 1;
+          let card = `<tr><td>${data[i]["sent_from_username"]}</td><td>${data[i]["name"]}</td><td>${data[i]["lastname"]}</td><td>${data[i]["fileName"]}</td><td> <div class="site-content cf">
+          <a class="btn btn-info" href="/${data[i]["location"]}" download="${data[i]["fileName"]}">Download</a>
+       </div></td></tr>`;
+          $("#received_table").append(card);
+          console.log(data[i]);
+          i += 1;
         });
       } else {
         let div = `<div class="alert alert-danger" role="alert">You currently have<a class="alert-link"> not received any files.</a></div>`;
@@ -26,28 +28,49 @@ function get_received() {
   get_sent();
 }
 
-
 function get_sent() {
-    let header = `<tr><th>Username</th><th>Name</th><th>Lastname</th><th>File name</th><th>View</th>
+  let header = `<tr><th>Username</th><th>Name</th><th>Lastname</th><th>File name</th><th>View</th>
    </tr>`;
-    $("#sent_table").append(header);
-    $.getJSON("/current", function (data) {
-      $.getJSON(`/get_sent/${data}`, function (data) {
-          console.log(data);
-        let size_a = data.length;
-        if (size_a > 0) {
-          let i = 0;
-          $.each(data, function () {
-             let card = `<tr><td>${data[i]["sent_to_username"]}</td><td>${data[i]["name"]}</td><td>${data[i]["lastname"]}</td><td>${data[i]["location"]}</td><td><button class="btn btn-danger"">Click</button></td></tr>`;
-             $("#sent_table").append(card);
-             console.log(data[i]);
-              i += 1;
-          });
-        } else {
-          let div = `<div class="alert alert-danger" role="alert">You currently have<a class="alert-link"> not sent any files.</a></div>`;
-          $("#status_sent").append(div);
-        }
-      });
+  $("#sent_table").append(header);
+  $.getJSON("/current", function (data) {
+    $.getJSON(`/get_sent/${data}`, function (data) {
+      console.log(data);
+      let size_a = data.length;
+      if (size_a > 0) {
+        let i = 0;
+        $.each(data, function () {
+          let card = `<tr><td>${data[i]["sent_to_username"]}</td><td>${data[i]["name"]}</td><td>${data[i]["lastname"]}</td><td>${data[i]["fileName"]}</td><td> <div class="site-content cf">
+          <a class="btn btn-info" href="/${data[i]["location"]}" download="${data[i]["fileName"]}">Download</a>
+       </div></td></tr>`;
+          $("#sent_table").append(card);
+          console.log(data[i]);
+          i += 1;
+        });
+      } else {
+        let div = `<div class="alert alert-danger" role="alert">You currently have<a class="alert-link"> not sent any files.</a></div>`;
+        $("#status_sent").append(div);
+      }
     });
-  }
-  
+  });
+}
+
+function download() {
+  console.log("ENTRE DOWNLOAD");
+  $.ajax({
+    url: "/uploads/joaquin.ramirez_edir.vidal_user.png",
+    method: "GET",
+    xhrFields: {
+      responseType: "blob",
+    },
+    success: function (data) {
+      var a = document.createElement("a");
+      var url = window.URL.createObjectURL(data);
+      a.href = url;
+      a.download = "myfile.png";
+      document.body.append(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    },
+  });
+}

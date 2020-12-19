@@ -11,7 +11,7 @@ import functions
 db = connector.Manager()
 engine = db.createEngine()
 
-UPLOAD_FOLDER = './uploads'
+UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 user_session_key = 'user'
 creds = {}
@@ -121,15 +121,16 @@ def upload_file():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            filename = creds['user_from'] + "_" + creds['user_to'] + "_" + filename
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            loc = creds['user_from'] + "_" + creds['user_to'] + "_" + filename
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], loc))
             r_msg = {'msg': 'File Uploaded!'}
             json_msg = json.dumps(r_msg)
 
             docs = entities.Docs(
                 sent_from_username=creds['user_from'],
                 sent_to_username=creds['user_to'],
-                location= UPLOAD_FOLDER + '/' + filename
+                location= UPLOAD_FOLDER + '/' + loc,
+                fileName=filename
             )
             creds.pop('user_to')
             session = db.getSession(engine)
@@ -150,7 +151,7 @@ def get_received(user_sent_to):
     print("USERNAME RECEIVED:", user_sent_to)
     try:
         db_session = db.getSession(engine)
-        query = f"""SELECT * FROM users u INNER JOIN (SELECT sent_from_username, location  FROM docs WHERE sent_to_username = '{user_sent_to}') 
+        query = f"""SELECT * FROM users u INNER JOIN (SELECT sent_from_username, location, fileName FROM docs WHERE sent_to_username = '{user_sent_to}') 
                 f ON u.username = f.sent_from_username;"""
         res = db_session.execute(query)
         d, a = {}, []
@@ -167,8 +168,9 @@ def get_sent(user_from):
     print("USERNAME FROM:", user_from)
     try:
         db_session = db.getSession(engine)
-        query = f"""SELECT * FROM users u INNER JOIN (SELECT sent_to_username, location  FROM docs WHERE sent_from_username = '{user_from}') 
+        query = f"""SELECT * FROM users u INNER JOIN (SELECT sent_to_username, location, fileName FROM docs WHERE sent_from_username = '{user_from}') 
                 f ON u.username = f.sent_to_username;"""
+        print("did it")
         res = db_session.execute(query)
         d, a = {}, []
         for rowproxy in res:

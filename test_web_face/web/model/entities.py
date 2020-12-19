@@ -15,5 +15,6 @@ class Docs(connector.Manager.Base):
     sent_from_username = Column(Integer, ForeignKey('users.username'))
     sent_to_username = Column(Integer, ForeignKey('users.username'))
     location = Column(String(50))
+    fileName = Column(String(50))
     sent_from = relationship(User, foreign_keys=[sent_from_username])
     sent_to = relationship(User, foreign_keys=[sent_to_username])
