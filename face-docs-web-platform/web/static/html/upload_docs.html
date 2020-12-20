@@ -24,7 +24,10 @@
     <br>
     <button type="button" class="btn btn-light" onclick="go_my_docs()">My Docs</button>
     <br>
-  </center>
+  <br>
+
+</center>
+
 </body>
 <section >
 
@@ -42,7 +45,10 @@
         method="post"
         enctype="multipart/form-data"
       >   
-      <center><input type="text" id="user_to" class="fadeIn second" name="user_to" placeholder="Send to..." required/></center>
+      <center><input type="text" id="user_to" class="fadeIn second" name="user_to" placeholder="Send to..." required/>
+      <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="to_who()">Validate</button>
+    </center> 
+
       <br>
       <div class="row">
         <div class="col-lg-5 mx-auto">
@@ -75,7 +81,8 @@
                <!-- <input id="myFile" type="file" > -->
                            <!-- </label>  -->
 
-            <input type="file" name="file" multiple size="50" onchange="myFunction()">
+            <input type="file" name="file" multiple size="50" >
+
 				
             <p id="demo"></p>
             
@@ -94,6 +101,10 @@
               >
                 Upload
               </button>
+              <div id="after">  
+
+              </div>
+        
             </div>
           </center>
 
