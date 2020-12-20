@@ -4,6 +4,6 @@
 ### Integrantes
 - Alexandra Shulca
 - Edir Vidal
-- Joaquin Ramirez
+- Joaquín Ramírez
 - Marko Puchuri
 - Priscila Portocarrero
