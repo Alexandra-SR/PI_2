@@ -15,7 +15,7 @@ UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 user_session_key = 'user'
 creds = {}
-
+validate = {}
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -102,22 +102,28 @@ def to(to_who):
     to_who = to_who.replace("<", "").replace(">", "")
     print("TOWOHH", to_who)
     try:
-        print("SESSION KEY", session[user_session_key])
-        db_session = db.getSession(engine)
-        query = f"""SELECT username FROM users WHERE username = '{to_who}'"""
-        res = db_session.execute(query)
-        d, a = {}, []
-        for rowproxy in res:
-            for column, value in rowproxy.items():
-                d = {**d, **{column: value}}
-            a.append(d)
-        print("A", a)
-        if len(a) != 0:
-            print("EFE")
-            return Response(json.dumps(a), status=200, mimetype="application/json")
-        else:
-            msg = {"msg": "Username does not exist!"}
+        if to_who != session[user_session_key]:
+            msg = {"msg": "You cannot send a file to yourself!"}
             return Response(json.dumps(msg), status=301, mimetype="application/json")
+
+        else:
+            validate.clear()
+            print("SESSION KEY", session[user_session_key])
+            db_session = db.getSession(engine)
+            query = f"""SELECT username FROM users WHERE username = '{to_who}'"""
+            res = db_session.execute(query)
+            d, a = {}, []
+            for rowproxy in res:
+                for column, value in rowproxy.items():
+                    d = {**d, **{column: value}}
+                a.append(d)
+            print("A", a)
+            if len(a) != 0:
+                print("EFE")
+                return Response(json.dumps(a), status=200, mimetype="application/json")
+            else:
+                msg = {"msg": "Username does not exist!"}
+                return Response(json.dumps(msg), status=301, mimetype="application/json")
 
     except:
         return Response(json.dumps({'msg': 'Failed to get other users'}), status=401, mimetype="application/json")
@@ -154,7 +160,8 @@ def upload_file():
             session = db.getSession(engine)
             session.add(docs)
             session.commit()
-            return Response(json_msg, status=201)
+            
+            return Response(json_msg, status=201, mimetype="application/json")
 
 
 @app.route('/current', methods=['GET'])
