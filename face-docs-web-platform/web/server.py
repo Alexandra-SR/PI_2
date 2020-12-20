@@ -42,7 +42,7 @@ def login():
         session[user_session_key] = json.dumps(
             msg['username'], cls=connector.AlchemyEncoder)
         creds['user_from'] = msg['username']
-        print("LOGGED IN", session[user_session_key] )
+        print("LOGGED IN", session[user_session_key])
         r_msg = {'msg': 'Match with username!'}
         json_msg = json.dumps(r_msg)
         return Response(json_msg, status=200)
@@ -97,12 +97,30 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-@app.route('/to', methods=['POST'])
-def to():
-    msg = json.loads(request.data)
-    creds['user_to'] = msg['user_to']
-    print("ADDED TO THIS")
-    print(creds)
+@app.route('/to/<to_who>', methods=['GET'])
+def to(to_who):
+    to_who = to_who.replace("<", "").replace(">", "")
+    print("TOWOHH", to_who)
+    try:
+        print("SESSION KEY", session[user_session_key])
+        db_session = db.getSession(engine)
+        query = f"""SELECT username FROM users WHERE username = '{to_who}'"""
+        res = db_session.execute(query)
+        d, a = {}, []
+        for rowproxy in res:
+            for column, value in rowproxy.items():
+                d = {**d, **{column: value}}
+            a.append(d)
+        print("A", a)
+        if len(a) != 0:
+            print("EFE")
+            return Response(json.dumps(a), status=200, mimetype="application/json")
+        else:
+            msg = {"msg": "Username does not exist!"}
+            return Response(json.dumps(msg), status=301, mimetype="application/json")
+
+    except:
+        return Response(json.dumps({'msg': 'Failed to get other users'}), status=401, mimetype="application/json")
 
 
 @app.route('/uploadajax', methods=['POST'])
@@ -129,7 +147,7 @@ def upload_file():
             docs = entities.Docs(
                 sent_from_username=creds['user_from'],
                 sent_to_username=creds['user_to'],
-                location= UPLOAD_FOLDER + '/' + loc,
+                location=UPLOAD_FOLDER + '/' + loc,
                 fileName=filename
             )
             creds.pop('user_to')
@@ -144,6 +162,24 @@ def current():
     user_json = session[user_session_key]
     print(user_json)
     return Response(user_json, status=200, mimetype="application/json")
+
+
+@app.route('/get_others', methods=['GET'])
+def get_others():
+    try:
+        print("SESSION KEY", session[user_session_key])
+        db_session = db.getSession(engine)
+        query = f"""SELECT username FROM users WHERE username <>{session[user_session_key]}"""
+        res = db_session.execute(query)
+        d, a = {}, []
+        for rowproxy in res:
+            for column, value in rowproxy.items():
+                d = {**d, **{column: value}}
+            a.append(d)
+        print("A", a)
+        return Response(json.dumps(a), status=200, mimetype="application/json")
+    except:
+        return Response(json.dumps({'msg': 'Failed to get other users'}), status=401, mimetype="application/json")
 
 
 @app.route('/get_received/<user_sent_to>', methods=['GET'])
@@ -162,6 +198,7 @@ def get_received(user_sent_to):
         return Response(json.dumps(a), status=200, mimetype="application/json")
     except:
         return Response(json.dumps({'msg': 'Failed to get files received'}), status=401, mimetype="application/json")
+
 
 @app.route('/get_sent/<user_from>', methods=['GET'])
 def get_sent(user_from):
