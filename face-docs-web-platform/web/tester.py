@@ -12,7 +12,7 @@ session = db.getSession(engine)
 
 # for doc in data:
 #     print(doc.id, doc.sent_from_username, doc.sent_to_username, doc.location, doc.fileName)
-# # engine.execute(f"""DELETE FROM users WHERE username = 'alexandra.shulca'""")
+# engine.execute(f"""DELETE FROM users""")
 
 # user_from = 'joaquin.ramirez'
 # query = f"""select * from docs"""
