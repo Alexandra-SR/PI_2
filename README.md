@@ -4,6 +4,6 @@
 ### Integrantes
 - Alexandra Shulca
 - Edir Vidal
-- Joaquín Ramírez
+- [Joaquín Ramírez](https://github.com/lordjuacs)
 - Marko Puchuri
 - Priscila Portocarrero
