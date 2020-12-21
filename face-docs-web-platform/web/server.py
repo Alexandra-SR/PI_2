@@ -124,7 +124,7 @@ def to(to_who):
             print("A", a)
             if len(a) != 0:
                 validation["last"] = to_who
-                print("EFE")
+                print("EFE", validation)
                 creds["user_to"] = to_who
                 return Response(json.dumps(a), status=200, mimetype="application/json")
             else:
