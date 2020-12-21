@@ -43,6 +43,15 @@ function to_who() {
         // alert("Wrong credentials! Try again");
         //    window.location = '/static/html/login.html';
       },
+      403: function (data) {
+        console.log("Username does not exist!");
+        $("#after").empty();
+        var div =
+          '<div class="alert alert-danger" role="alert"><a class="alert-link">¡No puedes enviarte archivos a ti mismo!</a> Inténtalo de nuevo.</div>';
+        $("#after").append(div);
+        // alert("Wrong credentials! Try again");
+        //    window.location = '/static/html/login.html';
+      },
     },
     success: function (data) {
       //   $("#after").empty();

@@ -102,14 +102,17 @@ validation = {}
 @app.route('/to/<to_who>', methods=['GET'])
 def to(to_who):
     to_who = to_who.replace("<", "").replace(">", "")
-    print("TOWOHH", to_who)
+    current = session[user_session_key]
+    print("CURRENT :", current)
+    current = current[1:len(current) - 1]
     try:
-        if to_who == session[user_session_key]:
+        if to_who == current:
+            print(current)
             msg = {"msg": "You cannot send a file to yourself!"}
-            return Response(json.dumps(msg), status=301, mimetype="application/json")
+            return Response(json.dumps(msg), status=403, mimetype="application/json")
 
         else:
-            print("SESSION KEY", session[user_session_key])
+            print("SESSION KEY", current)
             db_session = db.getSession(engine)
             query = f"""SELECT username FROM users WHERE username = '{to_who}'"""
             res = db_session.execute(query)
@@ -170,7 +173,6 @@ def upload_file():
 
     else:
         return Response(json.dumps({'msg': 'Failed to upload file'}), status=401, mimetype="application/json")
-
 
 
 @app.route('/current', methods=['GET'])

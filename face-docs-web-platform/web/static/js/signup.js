@@ -18,7 +18,7 @@ function signup(){
         //alert("There's already an account with the same username!\nTry a new one");
         //window.location = '/static/html/signup.html';
         $("#after").empty();
-        var div = '<div class="alert alert-danger" role="alert"><a class="alert-link">Username already exists!</a> Try with new credentials.</div>';
+        var div = '<div class="alert alert-danger" role="alert"><a class="alert-link">¡El usuario ya existe!</a> Inténtelo con otro usuario.</div>';
         $("#after").append(div);
 
 
@@ -29,7 +29,7 @@ function signup(){
       console.log("Account created!");
       //alert("You have successfully created an account!");
       //window.location = '/static/html/login.html';
-      var div = '<div class="alert alert-success" role="alert">Great! <a class="alert-link">Your account has been created.</a></div>';
+      var div = '<div class="alert alert-success" role="alert">¡Genial! <a class="alert-link">Tu cuenta ha sido creada.</a></div>';
       $("#after").append(div);
       window.setTimeout(function(){window.location = '/static/html/login.html';}, 3000);
 
