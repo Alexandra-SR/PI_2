@@ -1,23 +1,3 @@
-/*function login(){
-    console.log("Login User");
-    var username = $('#username').val();  //getting username by ID
-    var password = $('#password').val();  // getting password by id
-
-    var credentials = {'username':username, 'password':password};
-    $.post({
-        url:'/authenticate',
-        type: 'post',
-        dataType: 'json',
-        contentType: 'application/json',
-        success: function(data){
-            console.log("Authenticated!");
-            alert(data['msg']);
-
-        },
-        data: JSON.stringify(credentials)
-    });
-}*/
-
 function login() {
   var username = $("#username").val();
   var credentials = { username: username };
@@ -31,14 +11,14 @@ function login() {
         console.log("User was not found!");
         $("#after").empty();
         var div =
-          '<div class="alert alert-danger" role="alert"><a class="alert-link">Username was not found.</a> Sign up first.</div>';
+          '<div class="alert alert-danger" role="alert"><a class="alert-link">Usuario no encontrado.</a> Regístrese primero.</div>';
         $("#after").append(div);
       },
       301: function (data) {
         console.log("Failed to match");
         $("#after").empty();
         var div =
-          '<div class="alert alert-danger" role="alert"><a class="alert-link">Failed to math!</a> Try again.</div>';
+          '<div class="alert alert-danger" role="alert"><a class="alert-link">¡Error en la validación!</a> Inténtalo de nuevo.</div>';
         $("#after").append(div);
       },
     },
@@ -47,10 +27,10 @@ function login() {
       //alert(data['msg']);
       $("#after").empty();
       window.setTimeout(function () {
-        window.location = "/static/html/upload_docs.html";
+        window.location = "/static/html/options.html";
       }, 2000);
       var div =
-        '<div class="alert alert-success" role="alert">Great! <a class="alert-link">You\'re logged in.</a></div>';
+        '<div class="alert alert-success" role="alert">¡Genial! <a class="alert-link">Has ingresado.</a></div>';
       $("#after").append(div);
     },
     data: JSON.stringify(credentials),

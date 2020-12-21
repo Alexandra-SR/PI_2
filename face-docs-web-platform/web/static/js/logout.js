@@ -1,7 +1,7 @@
 function logout(){
     $.getJSON('/logout', function(data){
       console.log("Logged Out!");
-      alert("Your current session has ended");
+      alert("Tu sesión ha culminado");
       window.location = '/static/html/login.html';
     });
   

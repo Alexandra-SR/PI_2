@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <title>My Docs</title>
+  <title>Send Docs</title>
   <meta charset="utf-8">
   <link rel="stylesheet" type="text/css" href="../css/upload_docs.css">
 
@@ -15,29 +15,20 @@
 
 </head>
 
-<body>
-  <br>
-  <br>
-  <center>
-    <button type="button" class="btn btn-dark" onclick="logout()">Log Out</button>
-    <br>
-    <br>
-    <button type="button" class="btn btn-light" onclick="go_my_docs()">My Docs</button>
-    <br>
-  <br>
-
-</center>
-
-</body>
 <section >
 
     <div class="container p-5">
       <div class="row mb-5 text-center text-white">
         <div class="col-lg-10 mx-auto">
-          <h1 class="display-4">My Docs </h1>
+          <h1 class="display-4">Send Docs </h1>
           <p class="lead">Sube los archivos que quieras compartir</p>
         </div>
       </div>
+      <center>
+      <button type="button" class="btn btn-dark" onclick="logout()">Log Out</button> <br> <br>
+      <button type="button" class="btn btn-light" onclick="go_my_docs()">Regresar</button>
+        <br>
+    </center>
       <form
         id="upload-file"
         role="form"
@@ -45,19 +36,21 @@
         method="post"
         enctype="multipart/form-data"
       >   
-      <center><input type="text" id="user_to" class="fadeIn second" name="user_to" placeholder="Send to..." required/>
-      <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="to_who()">Validate</button>
-    </center> 
 
       <br>
       <div class="row">
-        <div class="col-lg-5 mx-auto">
-          <div class="p-5 bg-white shadow rounded-lg"><img src="https://res.cloudinary.com/mhmd/image/upload/v1557366994/img_epm3iz.png" alt="" width="200" class="d-block mx-auto mb-4 rounded-pill">
   
+        <div class="col-lg-5 mx-auto">
+          <div class="p-5 bg-white shadow rounded-lg">
+            <center>
+            <input type="text" id="user_to" class="fadeIn second" name="user_to" placeholder="Enviar a ..." required/>
+          </center>
+            <img src="https://res.cloudinary.com/mhmd/image/upload/v1557366994/img_epm3iz.png" alt="" width="200" class="d-block mx-auto mb-4 rounded-pill">
+            
             <!-- Bootstrap file upload-->
   
             <h6 class="text-center mb-4 text-muted">
-              Seleccione el archivo que desee
+              Selecciona el archivo que deseas
             </h6>
   
             <!-- <div class="custom-file overflow-hidden rounded-pill mb-5">
@@ -71,7 +64,7 @@
             <h6 class="text-center mb-4 text-muted">-->
               <!-- Texto -->
           
-            </h6>
+            <!-- </h6> -->
             
   
             <!-- Custom bootstrap upload file-->
@@ -88,10 +81,7 @@
             
             <center>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary" data-dismiss="modal">
-                Close
-              </button>
-              <button
+            <button
                 id="upload-file-btn"
                 onclick="upload()"
                 type="button"
@@ -99,14 +89,14 @@
                 data-dismiss="modal"
                 value="Upload"
               >
-                Upload
+                Enviar
               </button>
               <div id="after">  
 
               </div>
         
             </div>
-          </center>
+            </center>
 
             <!-- End -->
   

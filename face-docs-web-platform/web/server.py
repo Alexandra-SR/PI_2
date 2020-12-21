@@ -15,7 +15,6 @@ UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 user_session_key = 'user'
 creds = {}
-validate = {}
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -97,17 +96,19 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
+validation = {}
+
+
 @app.route('/to/<to_who>', methods=['GET'])
 def to(to_who):
     to_who = to_who.replace("<", "").replace(">", "")
     print("TOWOHH", to_who)
     try:
-        if to_who != session[user_session_key]:
+        if to_who == session[user_session_key]:
             msg = {"msg": "You cannot send a file to yourself!"}
             return Response(json.dumps(msg), status=301, mimetype="application/json")
 
         else:
-            validate.clear()
             print("SESSION KEY", session[user_session_key])
             db_session = db.getSession(engine)
             query = f"""SELECT username FROM users WHERE username = '{to_who}'"""
@@ -119,7 +120,9 @@ def to(to_who):
                 a.append(d)
             print("A", a)
             if len(a) != 0:
+                validation["last"] = to_who
                 print("EFE")
+                creds["user_to"] = to_who
                 return Response(json.dumps(a), status=200, mimetype="application/json")
             else:
                 msg = {"msg": "Username does not exist!"}
@@ -131,37 +134,43 @@ def to(to_who):
 
 @app.route('/uploadajax', methods=['POST'])
 def upload_file():
-    print("llegue")
-    if request.method == 'POST':
-        # check if the post request has the file part
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        file = request.files['file']
-        # if user does not select file, browser also
-        # submit an empty part without filename
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            loc = creds['user_from'] + "_" + creds['user_to'] + "_" + filename
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], loc))
-            r_msg = {'msg': 'File Uploaded!'}
-            json_msg = json.dumps(r_msg)
+    print(validation)
+    if len(validation) != 0:
+        validation.clear()
+        if request.method == 'POST':
+            # check if the post request has the file part
+            if 'file' not in request.files:
+                flash('No file part')
+                return redirect(request.url)
+            file = request.files['file']
+            # if user does not select file, browser also
+            # submit an empty part without filename
+            if file.filename == '':
+                flash('No selected file')
+                return redirect(request.url)
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                loc = creds['user_from'] + "_" + \
+                    creds['user_to'] + "_" + filename
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], loc))
+                r_msg = {'msg': 'File Uploaded!'}
+                json_msg = json.dumps(r_msg)
 
-            docs = entities.Docs(
-                sent_from_username=creds['user_from'],
-                sent_to_username=creds['user_to'],
-                location=UPLOAD_FOLDER + '/' + loc,
-                fileName=filename
-            )
-            creds.pop('user_to')
-            session = db.getSession(engine)
-            session.add(docs)
-            session.commit()
-            
-            return Response(json_msg, status=201, mimetype="application/json")
+                docs = entities.Docs(
+                    sent_from_username=creds['user_from'],
+                    sent_to_username=creds['user_to'],
+                    location=UPLOAD_FOLDER + '/' + loc,
+                    fileName=filename
+                )
+                creds.pop('user_to')
+                session = db.getSession(engine)
+                session.add(docs)
+                session.commit()
+                return Response(json_msg, status=201, mimetype="application/json")
+
+    else:
+        return Response(json.dumps({'msg': 'Failed to upload file'}), status=401, mimetype="application/json")
+
 
 
 @app.route('/current', methods=['GET'])

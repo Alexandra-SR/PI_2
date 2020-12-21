@@ -29,7 +29,7 @@ function to_who() {
         console.log("Not authenticated!");
         $("#after").empty();
         var div =
-          '<div class="alert alert-danger" role="alert"><a class="alert-link">Error.</a> Try again.</div>';
+          '<div class="alert alert-danger" role="alert"><a class="alert-link">Error.</a> Inténtalo de nuevo.</div>';
         $("#after").append(div);
         // alert("Wrong credentials! Try again");
         //    window.location = '/static/html/login.html';
@@ -38,7 +38,7 @@ function to_who() {
         console.log("Username does not exist!");
         $("#after").empty();
         var div =
-          '<div class="alert alert-danger" role="alert"><a class="alert-link">Username does not exist!</a> Try again.</div>';
+          '<div class="alert alert-danger" role="alert"><a class="alert-link">¡El usuario seleccionado no exite!</a> Inténtalo de nuevo.</div>';
         $("#after").append(div);
         // alert("Wrong credentials! Try again");
         //    window.location = '/static/html/login.html';
@@ -52,18 +52,19 @@ function to_who() {
       //   $("#after").append(div);
       //   window.setTimeout(function(){window.location = '/static/html/chat.html';}, 2000);
       console.log("Username validated!");
-        $("#after").empty();
-        var div =
-          '<div class="alert alert-success" role="alert"><a class="alert-link">Username validated!</a></div>';
-        $("#after").append(div);
+      $("#after").empty();
+      var div =
+        '<div class="alert alert-success" role="alert"><a class="alert-link">Usuario validado. ¡Archivo enviado!</a></div>';
+      $("#after").append(div);
     },
-    
+
     //data: JSON.stringify(credentials),
   });
   console.log("ACABE TO WHO");
 }
 
 function upload() {
+  to_who();
   console.log("BIA");
   var form_data = new FormData($("#upload-file")[0]);
   $.ajax({
@@ -81,5 +82,5 @@ function upload() {
 }
 
 function go_my_docs() {
-  window.location = "/static/html/my_docs.html";
+  window.location = "/static/html/options.html";
 }

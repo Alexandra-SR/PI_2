@@ -12,7 +12,7 @@ session = db.getSession(engine)
 
 # for doc in data:
 #     print(doc.id, doc.sent_from_username, doc.sent_to_username, doc.location, doc.fileName)
-#  engine.execute(f"""INSERT INTO users VALUES (')"""
+# # engine.execute(f"""DELETE FROM users WHERE username = 'alexandra.shulca'""")
 
 # user_from = 'joaquin.ramirez'
 # query = f"""select * from docs"""
@@ -26,7 +26,5 @@ session = db.getSession(engine)
 # print(a)
 dbResponse = session.query(entities.User)
 data = dbResponse[:]
-
-
 for user in data:
     print(user.username, user.name, user.lastname)

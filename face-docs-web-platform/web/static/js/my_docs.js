@@ -1,10 +1,9 @@
 function go_upload() {
-  window.location = "/static/html/upload_docs.html";
+  window.location = "/static/html/options.html";
 }
 
 function get_received() {
-  let header = `<tr><th>Username</th><th>Name</th><th>Lastname</th><th>File name</th><th>View</th>
- </tr>`;
+  let header = `<tr><th>Usuario</th><th>Nombre</th><th>Apellido</th><th>Archivo</th><th>Descargar</th> </tr>`;
   $("#received_table").append(header);
   $.getJSON("/current", function (data) {
     $.getJSON(`/get_received/${data}`, function (data) {
@@ -20,7 +19,7 @@ function get_received() {
           i += 1;
         });
       } else {
-        let div = `<div class="alert alert-danger" role="alert">You currently have<a class="alert-link"> not received any files.</a></div>`;
+        let div = `<div class="alert alert-danger" role="alert">Actualmente <a class="alert-link"> no has recibido archivos.</a></div>`;
         $("#status_received").append(div);
       }
     });
@@ -29,7 +28,7 @@ function get_received() {
 }
 
 function get_sent() {
-  let header = `<tr><th>Username</th><th>Name</th><th>Lastname</th><th>File name</th><th>View</th>
+  let header = `<tr><th>Usuario</th><th>Nombre</th><th>Apellido</th><th>Archivo</th><th>Descargar</th>
    </tr>`;
   $("#sent_table").append(header);
   $.getJSON("/current", function (data) {
@@ -47,7 +46,7 @@ function get_sent() {
           i += 1;
         });
       } else {
-        let div = `<div class="alert alert-danger" role="alert">You currently have<a class="alert-link"> not sent any files.</a></div>`;
+        let div = `<div class="alert alert-danger" role="alert">Actualmente<a class="alert-link"> no has enviado archivos.</a></div>`;
         $("#status_sent").append(div);
       }
     });
