@@ -33,16 +33,6 @@ signInButton.addEventListener('click', () => {
 });
 
 
-/*if(signUpButton){
-  signUpButton.addEventListener('click', () =>{
-     container.classList.remove('right-panel-active');
-});}
-
-if(signInButton){
-  signInButton.addEventListener('click', () =>{
-     container.classList.add('right-panel-active');
-});}
-*/
 
 document.getElementById("PostUserButton").disabled = false;
 document.getElementById("LoginButton").disabled = false;

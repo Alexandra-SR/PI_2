@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <html lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>SignUp and Login</title>
+    <link rel="stylesheet" type="text/css" href="../css/NEW_LOG.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="/static/js/libs/jquery-3.3.1.js"></script>
+    <script src="../js/NEW_LOG.js"></script>
+</head>
+
+
+<body>
+
+    <div class="container" id="container">
+        <div class="form-container sign-up-container">
+            <form action="#">
+                <h1>Crear Cuenta</h1>
+                <div class="social-container">
+
+                </div>
+
+                <input type="text" id="name"  name="signup" placeholder="Nombre" required/>
+                <input type="text" id="lastname"  name="signup" placeholder="Apellido" required/>
+                <input type="text" id="username"  name="signup" placeholder="Usuario" required />
+                <button type="button"  onclick="signup()">Crear cuenta</button>
+
+            </form>
+        </div>
+        <div class="form-container sign-in-container">
+            <form action="#">
+                <div class="social-container">
+                    <img src='/static/images/small_logo.PNG' alt=''> 
+                </div>
+                <input type="text" id="username" name="login" placeholder="Usuario" required/>
+                <button type="button" onclick="login()"> Iniciar sesión  </button>
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>¡Bienvenido de Vuelta!</h1>
+                    <p>Para ingresar y ver todas las novedades regístrese usando su cuenta</p>
+                    <button class="ghost" id="signIn">Iniciar sesión</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>¿No Está Registrado?</h1>
+                    <p>Cree una cuenta para empezar a acceder a documentos de forma segura</p>
+                    <button class="ghost" id="signUp">Crear cuenta</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>
+            Tenga su cámara activa, muéstrese a una distancia no mayor a 30 cm, con buena iluminación y sin ningún implemento que cubra su rostro  
+        </p>
+    </footer>
+
+    <script type ="text/javascript">
+        const signUpButton = document.getElementById('signUp');
+        const signInButton = document.getElementById('signIn');
+        const container = document.getElementById('container');
+
+        signUpButton.addEventListener('click', () => {
+            container.classList.add("right-panel-active");
+        });
+
+        signInButton.addEventListener('click', () => {
+            container.classList.remove("right-panel-active");
+        });
+    
+    </script>
+
+</body>
+</html>

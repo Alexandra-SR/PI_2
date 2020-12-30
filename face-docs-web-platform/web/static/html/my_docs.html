@@ -15,13 +15,30 @@
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
         <link rel="stylesheet" href="../css/bootstrap.css">
         <script src="/static/js/libs/jquery-3.3.1.js"></script>
-        <link rel="stylesheet" href="/static/css/docs.css">
+        <link rel="stylesheet" href="/static/css/my_docs.css">
 
     <script src="/static/js/libs/bootstrap.js"></script>
     <script src="/static/js/my_docs.js"></script>
     <script src="/static/js/logout.js"></script>
 
 </head>
+
+<div class="pos-f-t">
+  <div class="collapse" id="navbarToggleExternalContent">
+    <div class="bg-dark p-4">
+      <center>
+        <button type="button" class="btn btn-light" onclick="go_upload()">Regresar</button>
+        <button type="button" class="btn btn-light" onclick="logout()">Log Out</button> 
+      </center>
+    </div>
+  </div>
+  <nav class="navbar navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </nav>
+</div>
+
 <body onload="get_received()">
   <div class="container">
     <div class="row justify-content-center">
@@ -34,10 +51,6 @@
 
                 </div>
               
-                <button type="button" class="btn btn-dark" onclick="logout()">Log Out</button> <br> <br>
-                <button type="button" class="btn btn-secondary" onclick="go_upload()">Regresar</button>
-                <br>
-                <br>
                 <h2>Archivos Recibidos</h2>
                 <table class="table table-dark" id = "received_table">
                     

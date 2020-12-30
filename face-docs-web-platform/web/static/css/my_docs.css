@@ -1,13 +1,23 @@
 body,html{
     /*scroll-behavior: smooth;*/
-
+    background : url("/static/images/try3.png");
     height: 100%;
     margin: 0;
+    /*
     background: rgb(114,177,151);
-  background: radial-gradient(circle, rgba(114,177,151,1) 0%, rgba(21,76,77,1) 69%, rgba(49,44,64,1) 100%);
+    background: radial-gradient(circle, rgba(114,177,151,1) 0%, rgba(21,76,77,1) 69%, rgba(49,44,64,1) 100%);
+    */
   }
 
+  h1 {
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    color: #F5F5F5;
+  }
 
+  .lead{
+
+    color: #FFFFFF;
+  }
   .chat{
     margin-top: auto;
     margin-bottom: auto;
